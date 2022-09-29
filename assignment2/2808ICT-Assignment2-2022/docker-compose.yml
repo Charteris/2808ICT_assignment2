@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  rego-app:
+    image: my-rego-app
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+      - backend
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+volumes:
+  mongodata:
+
+networks:
+  frontend:
+  backend:
+    internal: true
